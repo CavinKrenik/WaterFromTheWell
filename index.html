@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,7 +6,7 @@
   <title>Water from the Well</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Cormorant+SC:wght@300;400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after {
       margin: 0;
@@ -15,15 +15,15 @@
     }
 
     :root {
-      --bg:          #08080d;
-      --bg2:         #0c0c14;
-      --bg3:         #0f0f1a;
-      --text:        #e2dbd0;
-      --text-muted:  #9a9186;
-      --accent:      #5b8da2;
-      --accent-dim:  rgba(91, 141, 162, 0.25);
-      --serif:       'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-      --serif-sc:    'Cormorant SC', Georgia, serif;
+      --bg:         #08080d;
+      --bg2:        #0c0c14;
+      --bg3:        #0f0f1a;
+      --text:       #e2dbd0;
+      --text-muted: #9a9186;
+      --accent:     #5b8da2;
+      --accent-dim: rgba(91, 141, 162, 0.25);
+      --serif:      'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      --serif-sc:   'Cormorant SC', Georgia, serif;
     }
 
     html { scroll-behavior: smooth; }
@@ -38,11 +38,10 @@
       overflow-x: hidden;
     }
 
-    /* ── SCROLL PROGRESS ─────────────────────────────────── */
+    /* SCROLL PROGRESS */
     #progress {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       height: 2px;
       width: 0%;
       background: linear-gradient(to right, var(--accent), #a8d4e6);
@@ -50,13 +49,12 @@
       transition: width 0.08s linear;
     }
 
-    /* ── HERO ─────────────────────────────────────────────── */
+    /* HERO */
     .hero {
       position: relative;
       height: 100vh;
       min-height: 620px;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       overflow: hidden;
@@ -65,8 +63,7 @@
     .hero-img {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
       object-position: center 35%;
       filter: brightness(0.6) saturate(0.7);
@@ -82,13 +79,12 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(to bottom,
-          rgba(8,8,13,0.55) 0%,
-          rgba(8,8,13,0.05) 35%,
-          rgba(8,8,13,0.05) 60%,
-          rgba(8,8,13,0.92) 100%
-        );
+      background: linear-gradient(to bottom,
+        rgba(8,8,13,0.55) 0%,
+        rgba(8,8,13,0.05) 35%,
+        rgba(8,8,13,0.05) 60%,
+        rgba(8,8,13,0.92) 100%
+      );
     }
 
     .hero-content {
@@ -103,16 +99,6 @@
     @keyframes hero-fade {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-eyebrow {
-      font-family: var(--serif-sc);
-      font-weight: 300;
-      font-size: clamp(0.6rem, 1vw, 0.75rem);
-      letter-spacing: 0.35em;
-      color: var(--accent);
-      display: block;
-      margin-bottom: 1.8rem;
     }
 
     .hero-title {
@@ -134,7 +120,6 @@
     }
 
     .epigraph {
-      font-style: italic;
       font-weight: 300;
       font-size: clamp(0.95rem, 1.6vw, 1.15rem);
       line-height: 2.3;
@@ -150,24 +135,11 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6rem;
       opacity: 0;
       animation: cue-appear 1s 2.2s ease forwards;
     }
 
-    @keyframes cue-appear {
-      to { opacity: 0.4; }
-    }
-
-    .scroll-cue-label {
-      font-family: var(--serif-sc);
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      color: var(--text);
-    }
+    @keyframes cue-appear { to { opacity: 0.4; } }
 
     .scroll-cue-line {
       width: 1px;
@@ -181,7 +153,7 @@
       50%       { transform: scaleY(0.6) translateY(8px); opacity: 0.3; }
     }
 
-    /* ── INTRO ────────────────────────────────────────────── */
+    /* INTRO */
     .intro {
       max-width: 680px;
       margin: 0 auto;
@@ -191,12 +163,6 @@
     .intro p {
       margin-bottom: 1.75em;
       color: var(--text);
-    }
-
-    .intro p.lead {
-      font-size: 1.12em;
-      font-style: italic;
-      color: rgba(226,219,208,0.88);
     }
 
     .well-note {
@@ -210,30 +176,7 @@
       margin-bottom: 0 !important;
     }
 
-    /* ── DIVIDER ──────────────────────────────────────────── */
-    .divider {
-      display: flex;
-      align-items: center;
-      padding: 0 2rem;
-      margin: 0.5rem 0;
-    }
-
-    .divider-line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--accent-dim), transparent);
-    }
-
-    .divider-glyph {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--accent-dim);
-      margin: 0 2rem;
-      box-shadow: 0 0 8px var(--accent);
-    }
-
-    /* ── CHAPTER ──────────────────────────────────────────── */
+    /* CHAPTER */
     .chapter { position: relative; }
 
     .img-wrap {
@@ -245,8 +188,7 @@
     }
 
     .img-wrap img {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
       object-position: center;
       filter: brightness(0.52) saturate(0.72);
@@ -256,8 +198,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to bottom,
+      background: linear-gradient(to bottom,
         rgba(8,8,13,0.25) 0%,
         transparent 25%,
         transparent 50%,
@@ -268,21 +209,9 @@
 
     .img-title {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       z-index: 2;
       padding: clamp(2rem, 4vw, 3.5rem) clamp(2rem, 8vw, 9rem);
-    }
-
-    .ch-num {
-      display: block;
-      font-family: var(--serif-sc);
-      font-weight: 300;
-      font-size: 0.65rem;
-      letter-spacing: 0.35em;
-      color: var(--accent);
-      margin-bottom: 0.9rem;
     }
 
     .ch-heading {
@@ -295,7 +224,7 @@
       text-shadow: 0 2px 40px rgba(0,0,0,0.5);
     }
 
-    /* ── CHAPTER TEXT ─────────────────────────────────────── */
+    /* CHAPTER BODY */
     .ch-body {
       background: var(--bg2);
       padding: clamp(4rem, 7vh, 6.5rem) 2.5rem;
@@ -314,14 +243,13 @@
     .ch-body p:last-child { margin-bottom: 0; }
 
     .ch-coda {
-      font-style: italic;
       color: var(--text-muted) !important;
       border-left: 1px solid var(--accent-dim);
       padding-left: 1.5rem;
       margin-top: 2.5rem !important;
     }
 
-    /* ── CLOSING ──────────────────────────────────────────── */
+    /* CLOSING */
     .closing {
       position: relative;
       background: var(--bg3);
@@ -354,7 +282,6 @@
 
     .closing p {
       font-size: clamp(1rem, 1.8vw, 1.2rem);
-      font-style: italic;
       font-weight: 300;
       line-height: 2.1;
       color: var(--text);
@@ -375,7 +302,7 @@
       color: var(--text-muted);
     }
 
-    /* ── FADE-IN ──────────────────────────────────────────── */
+    /* FADE-IN */
     .fi {
       opacity: 0;
       transform: translateY(22px);
@@ -383,18 +310,16 @@
     }
 
     .fi.on { opacity: 1; transform: translateY(0); }
+    .fi-d1  { transition-delay: 0.08s; }
+    .fi-d2  { transition-delay: 0.18s; }
+    .fi-d3  { transition-delay: 0.28s; }
 
-    .fi-d1 { transition-delay: 0.08s; }
-    .fi-d2 { transition-delay: 0.18s; }
-    .fi-d3 { transition-delay: 0.28s; }
-    .fi-d4 { transition-delay: 0.38s; }
-
-    /* ── RESPONSIVE ──────────────────────────────────────── */
+    /* RESPONSIVE */
     @media (max-width: 640px) {
-      .img-wrap { height: 72vh; }
+      .img-wrap  { height: 72vh; }
       .img-title { padding: 2rem 1.5rem; }
-      .ch-body { padding: 3rem 1.5rem; }
-      .intro { padding: 4rem 1.5rem; }
+      .ch-body   { padding: 3rem 1.5rem; }
+      .intro     { padding: 4rem 1.5rem; }
     }
   </style>
 </head>
@@ -402,9 +327,9 @@
 
   <div id="progress"></div>
 
-  <!-- ── HERO ──────────────────────────────────────────────── -->
+  <!-- HERO -->
   <section class="hero">
-    <img class="hero-img" src="file:///C:/Users/Cavin/OneDrive/Desktop/New%20folder/1.png" alt="Water flowing from a mosaic well">
+    <img class="hero-img" src="1.png" alt="Water flowing from a mosaic well">
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1 class="hero-title">Water from<br>the Well</h1>
@@ -421,19 +346,17 @@
     </div>
   </section>
 
-  <!-- ── INTRO ─────────────────────────────────────────────── -->
+  <!-- INTRO -->
   <section class="intro">
-    <p class="lead fi">There is an old idea, older than the stories that carried it to us, that the past does not disappear. It collects. It deepens. It becomes the water beneath everything living, the source that feeds the roots, that rises through the tree, that falls as dew and finds its way back down. The Norse called it Urth's Well. Everything accomplished, everything survived, everything witnessed accumulates there. The present grows from it whether we know it or not.</p>
+    <p class="fi">There is an old idea, older than the stories that carried it to us, that the past does not disappear. It collects. It deepens. It becomes the water beneath everything living, the source that feeds the roots, that rises through the tree, that falls as dew and finds its way back down. The Norse called it Urth's Well. Everything accomplished, everything survived, everything witnessed accumulates there. The present grows from it whether we know it or not.</p>
     <p class="fi fi-d1">I spent six years on the streets. Deep in addiction, walking through the night to stay warm, watching people move through their lives without looking up. I cycled through every way I could find to stop and couldn't. I watched others do the same. I saw what despair looks like when it becomes ordinary, to the person living it and to everyone passing by.</p>
     <p class="fi fi-d2">None of that went away. It went into the well.</p>
-    <p class="well-note fi fi-d3">What follows is drawn from that water.</p>
   </section>
 
-
-  <!-- ── CHAPTER I ─────────────────────────────────────────── -->
+  <!-- CHAPTER I -->
   <article class="chapter">
     <div class="img-wrap">
-      <img src="file:///C:/Users/Cavin/OneDrive/Desktop/New%20folder/2.jpg" alt="A hand reaching down to help someone sitting on the street">
+      <img src="2.jpg" alt="A hand reaching down to help someone sitting on the street">
       <div class="img-title">
         <h2 class="ch-heading">Give water to<br>the thirsty traveler</h2>
       </div>
@@ -448,11 +371,10 @@
     </div>
   </article>
 
-
-  <!-- ── CHAPTER II ────────────────────────────────────────── -->
+  <!-- CHAPTER II -->
   <article class="chapter">
     <div class="img-wrap">
-      <img src="file:///C:/Users/Cavin/OneDrive/Desktop/New%20folder/3.png" alt="A person sleeping under a blanket against a wall" style="object-position: center 45%;">
+      <img src="3.png" alt="A person sleeping under a blanket against a wall" style="object-position: center 45%;">
       <div class="img-title">
         <h2 class="ch-heading">Warmth to the<br>shivering stranger</h2>
       </div>
@@ -467,11 +389,10 @@
     </div>
   </article>
 
-
-  <!-- ── CHAPTER III ───────────────────────────────────────── -->
+  <!-- CHAPTER III -->
   <article class="chapter">
     <div class="img-wrap">
-      <img src="file:///C:/Users/Cavin/OneDrive/Desktop/New%20folder/4.png" alt="Two people sitting together on a park bench">
+      <img src="4.png" alt="Two people sitting together on a park bench">
       <div class="img-title">
         <h2 class="ch-heading">And a friendly ear<br>to those who seek it</h2>
       </div>
@@ -486,11 +407,10 @@
     </div>
   </article>
 
-
-  <!-- ── CHAPTER IV ────────────────────────────────────────── -->
+  <!-- CHAPTER IV -->
   <article class="chapter">
     <div class="img-wrap">
-      <img src="file:///C:/Users/Cavin/OneDrive/Desktop/New%20folder/5.jpg" alt="Two hands clasped together" style="object-position: center 55%;">
+      <img src="5.jpg" alt="Two hands clasped together" style="object-position: center 55%;">
       <div class="img-title">
         <h2 class="ch-heading">For in showing kindness,<br>we find connection</h2>
       </div>
@@ -504,7 +424,7 @@
     </div>
   </article>
 
-  <!-- ── CLOSING ───────────────────────────────────────────── -->
+  <!-- CLOSING -->
   <section class="closing">
     <div class="closing-inner">
       <div class="closing-rule"></div>
@@ -516,14 +436,12 @@
   </section>
 
   <script>
-    // Scroll progress bar
     const bar = document.getElementById('progress');
     window.addEventListener('scroll', () => {
       const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
       bar.style.width = (pct * 100) + '%';
     }, { passive: true });
 
-    // Fade-in on scroll
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -537,3 +455,4 @@
   </script>
 </body>
 </html>
+
