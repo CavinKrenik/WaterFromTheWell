@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Water from the Well</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg:          #08080d;
+      --bg2:         #0c0c14;
+      --bg3:         #0f0f1a;
+      --text:        #e2dbd0;
+      --text-muted:  #9a9186;
+      --accent:      #5b8da2;
+      --accent-dim:  rgba(91, 141, 162, 0.25);
+      --serif:       'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      --serif-sc:    'Cormorant SC', Georgia, serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--serif);
+      font-size: clamp(18px, 1.8vw, 21px);
+      line-height: 1.9;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLL PROGRESS ─────────────────────────────────── */
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(to right, var(--accent), #a8d4e6);
+      z-index: 1000;
+      transition: width 0.08s linear;
+    }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 620px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      filter: brightness(0.6) saturate(0.7);
+      transform: scale(1.04);
+      animation: hero-drift 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes hero-drift {
+      from { transform: scale(1.04) translateY(0); }
+      to   { transform: scale(1.08) translateY(-1.5%); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom,
+          rgba(8,8,13,0.55) 0%,
+          rgba(8,8,13,0.05) 35%,
+          rgba(8,8,13,0.05) 60%,
+          rgba(8,8,13,0.92) 100%
+        );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 820px;
+      padding: 0 2.5rem;
+      animation: hero-fade 1.8s ease both;
+    }
+
+    @keyframes hero-fade {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      font-family: var(--serif-sc);
+      font-weight: 300;
+      font-size: clamp(0.6rem, 1vw, 0.75rem);
+      letter-spacing: 0.35em;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-title {
+      font-family: var(--serif-sc);
+      font-weight: 300;
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      letter-spacing: 0.06em;
+      line-height: 1.05;
+      color: #fff;
+      text-shadow: 0 4px 60px rgba(0,0,0,0.4);
+      margin-bottom: 2.8rem;
+    }
+
+    .hero-rule {
+      width: 50px;
+      height: 1px;
+      background: var(--accent);
+      margin: 0 auto 2.5rem;
+    }
+
+    .epigraph {
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+      line-height: 2.3;
+      color: rgba(226, 219, 208, 0.78);
+      letter-spacing: 0.015em;
+    }
+
+    .epigraph span { display: block; }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: 0;
+      animation: cue-appear 1s 2.2s ease forwards;
+    }
+
+    @keyframes cue-appear {
+      to { opacity: 0.4; }
+    }
+
+    .scroll-cue-label {
+      font-family: var(--serif-sc);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--text);
+    }
+
+    .scroll-cue-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(226,219,208,0.7), transparent);
+      animation: cue-line 2.2s 2.5s ease-in-out infinite;
+    }
+
+    @keyframes cue-line {
+      0%, 100% { transform: scaleY(1) translateY(0); opacity: 0.7; }
+      50%       { transform: scaleY(0.6) translateY(8px); opacity: 0.3; }
+    }
+
+    /* ── INTRO ────────────────────────────────────────────── */
+    .intro {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: clamp(5rem, 10vh, 8rem) 2.5rem;
+    }
+
+    .intro p {
+      margin-bottom: 1.75em;
+      color: var(--text);
+    }
+
+    .intro p.lead {
+      font-size: 1.12em;
+      font-style: italic;
+      color: rgba(226,219,208,0.88);
+    }
+
+    .well-note {
+      font-family: var(--serif-sc);
+      font-weight: 300;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-align: center;
+      margin-top: 2.5rem !important;
+      margin-bottom: 0 !important;
+    }
+
+    /* ── DIVIDER ──────────────────────────────────────────── */
+    .divider {
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      margin: 0.5rem 0;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--accent-dim), transparent);
+    }
+
+    .divider-glyph {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      margin: 0 2rem;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    /* ── CHAPTER ──────────────────────────────────────────── */
+    .chapter { position: relative; }
+
+    .img-wrap {
+      position: relative;
+      width: 100%;
+      height: 88vh;
+      min-height: 520px;
+      overflow: hidden;
+    }
+
+    .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.52) saturate(0.72);
+    }
+
+    .img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(8,8,13,0.25) 0%,
+        transparent 25%,
+        transparent 50%,
+        rgba(8,8,13,0.8) 85%,
+        rgba(8,8,13,0.97) 100%
+      );
+    }
+
+    .img-title {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      padding: clamp(2rem, 4vw, 3.5rem) clamp(2rem, 8vw, 9rem);
+    }
+
+    .ch-num {
+      display: block;
+      font-family: var(--serif-sc);
+      font-weight: 300;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      color: var(--accent);
+      margin-bottom: 0.9rem;
+    }
+
+    .ch-heading {
+      font-family: var(--serif-sc);
+      font-weight: 300;
+      font-size: clamp(2rem, 5.5vw, 4rem);
+      letter-spacing: 0.03em;
+      line-height: 1.15;
+      color: #fff;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+    }
+
+    /* ── CHAPTER TEXT ─────────────────────────────────────── */
+    .ch-body {
+      background: var(--bg2);
+      padding: clamp(4rem, 7vh, 6.5rem) 2.5rem;
+    }
+
+    .ch-body-inner {
+      max-width: 660px;
+      margin: 0 auto;
+    }
+
+    .ch-body p {
+      margin-bottom: 1.75em;
+      color: var(--text);
+    }
+
+    .ch-body p:last-child { margin-bottom: 0; }
+
+    .ch-coda {
+      font-style: italic;
+      color: var(--text-muted) !important;
+      border-left: 1px solid var(--accent-dim);
+      padding-left: 1.5rem;
+      margin-top: 2.5rem !important;
+    }
+
+    /* ── CLOSING ──────────────────────────────────────────── */
+    .closing {
+      position: relative;
+      background: var(--bg3);
+      padding: clamp(6rem, 12vh, 10rem) 2.5rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .closing::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(91,141,162,0.055) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .closing-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .closing-rule {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin: 0 auto 3.5rem;
+    }
+
+    .closing p {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 2.1;
+      color: var(--text);
+      margin-bottom: 1.8em;
+    }
+
+    .closing p:last-of-type {
+      color: #b8d4e0;
+      margin-bottom: 0;
+    }
+
+    .byline {
+      margin-top: 4rem;
+      font-family: var(--serif-sc);
+      font-weight: 300;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: var(--text-muted);
+    }
+
+    /* ── FADE-IN ──────────────────────────────────────────── */
+    .fi {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .fi.on { opacity: 1; transform: translateY(0); }
+
+    .fi-d1 { transition-delay: 0.08s; }
+    .fi-d2 { transition-delay: 0.18s; }
+    .fi-d3 { transition-delay: 0.28s; }
+    .fi-d4 { transition-delay: 0.38s; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .img-wrap { height: 72vh; }
+      .img-title { padding: 2rem 1.5rem; }
+      .ch-body { padding: 3rem 1.5rem; }
+      .intro { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress"></div>
+
+  <!-- ── HERO ──────────────────────────────────────────────── -->
+  <section class="hero">
+    <img class="hero-img" src="file:///C:/Users/Cavin/OneDrive/Desktop/New%20folder/1.png" alt="Water flowing from a mosaic well">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">Water from<br>the Well</h1>
+      <div class="hero-rule"></div>
+      <div class="epigraph">
+        <span>Give water to the thirsty traveler,</span>
+        <span>warmth to the shivering stranger,</span>
+        <span>and a friendly ear to those who seek it,</span>
+        <span>for in showing kindness, we find connection.</span>
+      </div>
+    </div>
+    <div class="scroll-cue">
+      <div class="scroll-cue-line"></div>
+    </div>
+  </section>
+
+  <!-- ── INTRO ─────────────────────────────────────────────── -->
+  <section class="intro">
+    <p class="lead fi">There is an old idea, older than the stories that carried it to us, that the past does not disappear. It collects. It deepens. It becomes the water beneath everything living, the source that feeds the roots, that rises through the tree, that falls as dew and finds its way back down. The Norse called it Urth's Well. Everything accomplished, everything survived, everything witnessed accumulates there. The present grows from it whether we know it or not.</p>
+    <p class="fi fi-d1">I spent six years on the streets. Deep in addiction, walking through the night to stay warm, watching people move through their lives without looking up. I cycled through every way I could find to stop and couldn't. I watched others do the same. I saw what despair looks like when it becomes ordinary, to the person living it and to everyone passing by.</p>
+    <p class="fi fi-d2">None of that went away. It went into the well.</p>
+    <p class="well-note fi fi-d3">What follows is drawn from that water.</p>
+  </section>
+
+
+  <!-- ── CHAPTER I ─────────────────────────────────────────── -->
+  <article class="chapter">
+    <div class="img-wrap">
+      <img src="file:///C:/Users/Cavin/OneDrive/Desktop/New%20folder/2.jpg" alt="A hand reaching down to help someone sitting on the street">
+      <div class="img-title">
+        <h2 class="ch-heading">Give water to<br>the thirsty traveler</h2>
+      </div>
+    </div>
+    <div class="ch-body">
+      <div class="ch-body-inner">
+        <p class="fi">There is a particular kind of thirst that has nothing to do with water. It lives in the body but it reaches deeper than the body. I know what it is to need something so completely that the need becomes the whole world, and to watch that need go unmet, day after day, while the rest of the world moves through its routines without a second look.</p>
+        <p class="fi fi-d1">On the streets I was thirsty in every sense of the word. For warmth. For stability. For someone to see me standing there. Addiction has a way of narrowing the world to the next hour, the next fix, the next way to get through the night. You stop being a person with a history and a future. You become only the present moment of your need.</p>
+        <p class="fi fi-d2">What I didn't understand then was that the need itself was going into the well. Every sleepless night, every moment of invisibility, every time someone stepped around me on the sidewalk, it was accumulating. Not disappearing. Becoming something.</p>
+        <p class="ch-coda fi fi-d3">The well doesn't ask what you put into it. It receives everything.</p>
+      </div>
+    </div>
+  </article>
+
+
+  <!-- ── CHAPTER II ────────────────────────────────────────── -->
+  <article class="chapter">
+    <div class="img-wrap">
+      <img src="file:///C:/Users/Cavin/OneDrive/Desktop/New%20folder/3.png" alt="A person sleeping under a blanket against a wall" style="object-position: center 45%;">
+      <div class="img-title">
+        <h2 class="ch-heading">Warmth to the<br>shivering stranger</h2>
+      </div>
+    </div>
+    <div class="ch-body">
+      <div class="ch-body-inner">
+        <p class="fi">Cold is something you stop noticing after a while. Not because it goes away but because fighting it becomes so constant it just becomes the texture of existing. You walk because standing still means the cold wins. You find doorways, overhangs, the lee side of buildings. You learn which places will leave you alone and which ones won't.</p>
+        <p class="fi fi-d1">What stays with you longer than the cold itself is the strangeness of being a stranger in a place you know completely. I knew every underpass, every warming corner, every face in that community of people the city preferred not to see. I was not a stranger to that world. But to everyone moving through on their way to somewhere else, I was invisible. A problem that wasn't theirs. A life that didn't register.</p>
+        <p class="fi fi-d2">Warmth in those years rarely came from a building or a fire. It came from the people living alongside you in the same conditions. Someone who knew your name. Someone who didn't walk past. The smallest acknowledgment that you were present and human could carry you further than a meal. That kind of warmth costs nothing to give and lands like something essential.</p>
+        <p class="ch-coda fi fi-d3">It too went into the well. The cold and the warmth both. The indifference and the moments of recognition. All of it accumulating, layering, becoming the ground of what came after.</p>
+      </div>
+    </div>
+  </article>
+
+
+  <!-- ── CHAPTER III ───────────────────────────────────────── -->
+  <article class="chapter">
+    <div class="img-wrap">
+      <img src="file:///C:/Users/Cavin/OneDrive/Desktop/New%20folder/4.png" alt="Two people sitting together on a park bench">
+      <div class="img-title">
+        <h2 class="ch-heading">And a friendly ear<br>to those who seek it</h2>
+      </div>
+    </div>
+    <div class="ch-body">
+      <div class="ch-body-inner">
+        <p class="fi">Being heard is not the same as being seen. You can be looked at and still be invisible. But when someone actually listens, stops, stays, gives you their full attention without an agenda or a clock running, something shifts. You become real in a way that survival alone doesn't provide.</p>
+        <p class="fi fi-d1">In those years I watched people carry stories that had nowhere to go. The weight of a life that nobody was tracking, nobody was holding, nobody would miss if it ended. That weight is its own kind of addiction. It fills the same hollow that substances fill. The need to matter to someone, even briefly, even once.</p>
+        <p class="fi fi-d2">I was not good at asking to be heard. I'm still not. What I learned instead was how to listen. Sitting with someone in the dark, not fixing anything, not offering a solution, just being present while they said the thing they had been carrying. That turned out to be one of the most significant things I know how to do. I learned it in conditions that stripped everything else away.</p>
+        <p class="ch-coda fi fi-d3">What you hear from others goes into the well too. Their stories become part of the water. Their survival becomes evidence you draw from when you need to believe that survival is possible.</p>
+      </div>
+    </div>
+  </article>
+
+
+  <!-- ── CHAPTER IV ────────────────────────────────────────── -->
+  <article class="chapter">
+    <div class="img-wrap">
+      <img src="file:///C:/Users/Cavin/OneDrive/Desktop/New%20folder/5.jpg" alt="Two hands clasped together" style="object-position: center 55%;">
+      <div class="img-title">
+        <h2 class="ch-heading">For in showing kindness,<br>we find connection</h2>
+      </div>
+    </div>
+    <div class="ch-body">
+      <div class="ch-body-inner">
+        <p class="fi">This is the line that took the longest to understand. Not because it's complicated but because for a long time I didn't believe it. Kindness felt like something that happened to other people, in other lives. Openness was a vulnerability. Connection meant something that could be taken away.</p>
+        <p class="fi fi-d1">What changed wasn't a single moment. It was accumulation. The well filling slowly, layer by layer, until the weight of everything survived became something that could be offered rather than just carried. The cold nights, the invisibility, the people I watched disappear into their need and the ones I watched find their way back out, all of it became a kind of knowledge that only moves in one direction. It asks to be shared.</p>
+        <p class="fi fi-d2">When someone shares a piece of their story with me, I try to give them the thing I needed most when I was struggling: my attention. Not advice. Not answers. Just the willingness to sit, listen, and let them know they are not carrying it alone. Because I know what it meant when someone did that for me, and I know what it costs when nobody does.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- ── CLOSING ───────────────────────────────────────────── -->
+  <section class="closing">
+    <div class="closing-inner">
+      <div class="closing-rule"></div>
+      <p class="fi">This is what the well is. Not a metaphor. The actual mechanism by which what was survived becomes what sustains. Urth's water rises through the roots, feeds the living tree, falls back as dew, and finds its way home. Nothing is lost. Everything accomplished, everything endured, everything witnessed accumulates and feeds forward.</p>
+      <p class="fi fi-d1">The past does not drain away. It becomes the water you give to the thirsty traveler. The warmth you offer the shivering stranger. The ear you lend to the one who needs to be heard.</p>
+      <p class="fi fi-d2">It becomes the kindness that finds its way back to the well.</p>
+      <div class="byline fi fi-d3">Cavin Krenik</div>
+    </div>
+  </section>
+
+  <script>
+    // Scroll progress bar
+    const bar = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+      const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      bar.style.width = (pct * 100) + '%';
+    }, { passive: true });
+
+    // Fade-in on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('on');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fi').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
